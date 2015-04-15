@@ -143,8 +143,6 @@ PRODUCT_PACKAGES += \
     CMFileManager \
     Eleven \
     LockClock \
-    CMUpdater \
-    CMAccount \
     CMHome \
     CyanogenSetupWizard
 
@@ -212,9 +210,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PACKAGE_OVERLAYS += vendor/cm/overlay/common
 
-PRODUCT_VERSION_MAJOR = 12
-PRODUCT_VERSION_MINOR = 1
-PRODUCT_VERSION_MAINTENANCE = 0-RC0
+PRODUCT_VERSION_MAJOR = OSR
+PRODUCT_VERSION_MINOR = LP
+PRODUCT_VERSION_MAINTENANCE =
+
+
+
+#OSR
+
+#########################################################################################
+
+ TEAM_PRODUCT := SuperOSR
+ TEAM_NAME := ST
+ ANDROID_ALIAS_NAME := LP
+ OSR_BUILD_DATE := $(shell date -u +%y%m.%d)
+
+ CM_VERSION := $(TEAM_PRODUCT)-$(ANDROID_ALIAS_NAME)-$(OSR_BUILD_DATE)
+
+#########################################################################################
+
 
 # Set CM_BUILDTYPE from the env RELEASE_TYPE, for jenkins compat
 
@@ -254,7 +268,7 @@ ifdef CM_BUILDTYPE
     endif
 else
     # If CM_BUILDTYPE is not defined, set to UNOFFICIAL
-    CM_BUILDTYPE := UNOFFICIAL
+    CM_BUILDTYPE := RELEASE
     CM_EXTRAVERSION :=
 endif
 
@@ -276,7 +290,7 @@ ifeq ($(CM_BUILDTYPE), RELEASE)
     endif
 else
     ifeq ($(PRODUCT_VERSION_MINOR),0)
-        CM_VERSION := $(PRODUCT_VERSION_MAJOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
+        CM_VERSION := $(PRODUCT_VERSION_MAJOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)-$(CM_BUILD)
     else
         CM_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
     endif
@@ -306,7 +320,8 @@ ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
     else
       TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
     endif
-    CM_DISPLAY_VERSION=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(TARGET_VENDOR_RELEASE_BUILD_ID)
+    #CM_DISPLAY_VERSION=$(PRODUCT_VERSION_MAJOR)-$(PRODUCT_VERSION_MINOR)-$(TARGET_VENDOR_RELEASE_BUILD_ID)
+    CM_DISPLAY_VERSION := $(CM_VERSION)
   endif
 endif
 endif
