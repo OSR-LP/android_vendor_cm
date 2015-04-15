@@ -223,9 +223,7 @@ PRODUCT_VERSION_MAINTENANCE =
  TEAM_PRODUCT := SuperOSR
  TEAM_NAME := ST
  ANDROID_ALIAS_NAME := LP
- OSR_BUILD_DATE := $(shell date -u +%y%m.%d)
-
- CM_VERSION := $(TEAM_PRODUCT)-$(ANDROID_ALIAS_NAME)-$(OSR_BUILD_DATE)
+ OSR_BUILD_DATE := $(shell date -u +%Y%m.%d)
 
 #########################################################################################
 
@@ -295,6 +293,8 @@ else
         CM_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
     endif
 endif
+
+ CM_VERSION := $(TEAM_PRODUCT)-$(ANDROID_ALIAS_NAME)-$(CM_BUILD)-$(OSR_BUILD_DATE)
 
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.cm.version=$(CM_VERSION) \
